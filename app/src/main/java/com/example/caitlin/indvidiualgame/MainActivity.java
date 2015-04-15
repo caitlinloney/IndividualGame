@@ -52,9 +52,7 @@ public class MainActivity extends ActionBarActivity {
         levelDisplay.setText(
                 getResources().getString(R.string.level, level));
 
-
-        // configure listeners for buttons
-
+        // configure listeners for backspace button
         backspaceButton = (Button) findViewById(R.id.backspaceButton);
         backspaceButton.setOnClickListener(backspaceButtonListener);
 
