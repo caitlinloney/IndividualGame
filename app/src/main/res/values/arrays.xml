@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quack_letters">
+        <item>Q</item>
+        <item>U</item>
+        <item>A</item>
+        <item>C</item>
+        <item>K</item>
+    </string-array>
+
+    <string-array name="player_entries"><item></item></string-array>
+</resources>
