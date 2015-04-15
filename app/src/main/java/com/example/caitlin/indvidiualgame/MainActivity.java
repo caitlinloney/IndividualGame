@@ -1,5 +1,9 @@
 package com.example.caitlin.indvidiualgame;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
@@ -17,11 +21,9 @@ import java.util.Collections;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final String TAG = "QUACKGAME";
-    private static final int numLetters = 5;
+    //public static final String TAG = "QUACKGAME";
 
     private int level = 0;
-
 
     private String targetWord;
     private String partialWord = "";
@@ -137,6 +139,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -174,7 +177,50 @@ public class MainActivity extends ActionBarActivity {
         }
 
     public void onFinish() {
-        timerTextView.setText("done!");
+
+        timerTextView.setText("Time's up!");
+        disableButtons();
+
+        // DialogFragment to display results and start new game
+        DialogFragment results = new DialogFragment() {
+                    // create an AlertDialog and return it
+                    @Override
+                    public Dialog onCreateDialog(Bundle bundle){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setCancelable(false);
+
+                        builder.setMessage(getResources().getString(R.string.results, level));
+
+                        // "Reset Quiz" Button
+                        builder.setPositiveButton(R.string.play_again, new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int id){
+                                        newGame();
+                                    }
+                                } // end anonymous inner class
+                        ); // end call to setPositiveButton
+
+                        return builder.create(); // return the AlertDialog
+                    } // end method onCreateDialog
+                }; // end DialogFragment anonymous inner class
+
+        // use FragmentManager to display the DialogFragment
+        results.show(getFragmentManager(), "quiz results");
     }
     };
+
+    private void disableButtons()
+    {
+        for (Button b : buttonList) {
+            b.setEnabled(false);
+        }
+    }
+
+    public void newGame(){
+        level = 0;
+        timer.start();
+        for (Button b : buttonList) {
+            b.setEnabled(true);
+        }
+        newLevel();
+    }
 }
